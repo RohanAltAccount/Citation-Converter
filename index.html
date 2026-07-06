@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APA to BibTex Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+    <header>
+        <h1>Enter APA Citation</h1>
+    </header>
+    <main>
+        <h2>The citation should include the author, title, journal, year, volume, pages, and DOI (if applicable).</h2>
+        <form id="citationForm">
+            <label for="apaCitation" class="label">APA Citation:</label>
+            <textarea id="apaCitation" name="apaCitation" rows="5" required></textarea>
+            <button type="submit" id="button">Convert to BibTex</button>
+        </form>
+        <div id="bibtexOutput" class="output"></div>
+    </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
