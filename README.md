@@ -1,5 +1,5 @@
 # Citation-Converter
-I made this because I needed a converter while writing my research paper, and then I realized; why not just make it myself? Obviously, I could gone online and looked for it. It's less fun that way. This converter takes the user's input (APA formatted citation) and converts it to BibTex to be used in LaTeX and Overleaf.
+I made this because I needed a converter while writing my research paper, and then I realized: why not just make one myself? Obviously, I could gone online and looked for it, but that's what boring people do. This converter takes the user's input (APA formatted citation) and converts it to BibTex to be used in LaTeX and Overleaf.
 
 ## How to use
 This is rough converter, you will still have to manually do stuff.
