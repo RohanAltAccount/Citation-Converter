@@ -8,7 +8,7 @@ function convertToBibTex() {
   const parsed = parseApaCitation(apaInput);
   console.log(parsed);
 
-const bibTexEntry = `@article{example${parsed.year},
+const bibTexEntry = `@article{firstAuthor${parsed.year},
 author = {${parsed.author}},
 title = {${parsed.title}},
 journal = {${parsed.journal}},
@@ -18,57 +18,91 @@ number = {${parsed.number}},
 pages = {${parsed.pages}},
 doi = {${parsed.doi}}
 }`;
+bibTexOutput.textContent = bibTexEntry;
+
+console.log(bibTexEntry);
 /*
 Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., ... & Bengio, Y. (2020). Generative adversarial networks. Communications of the ACM, 63(11), 139-144.
 */
 bibTexOutput.textContent = bibTexEntry;
 }
 function parseApaCitation(apaCitation) {
-  const parts = apaCitation.split("(");
+  const parts = apaCitation.indexOf("(");
+  const author = apaCitation.slice(0, parts).trim();
+  const closeParenIndex = apaCitation.indexOf(")");
+  const year = apaCitation
+  .slice(parts + 1, closeParenIndex)
+  .trim();
 
-  const author = parts[0].trim();
-  const afterAuthor = parts[1];
-  console.log(parts);
+const afterYear = apaCitation
+    .slice(closeParenIndex + 1)
+    .trim();
 
-  const yearParts = afterAuthor.split(")");
-  const year = yearParts[0].trim();
-  const afterYear = yearParts[1].trim();
-  console.log(yearParts);
+const citationBody = afterYear.slice(1).trim();
+const titleEndIndex = citationBody.indexOf(".");
+const title = citationBody.slice(0, titleEndIndex).trim();
+const afterTitle = citationBody.slice(titleEndIndex + 1).trim();
+const journalEndIndex = afterTitle.indexOf(",");
+const journal = afterTitle.slice(0, journalEndIndex).trim();
+const afterJournal = afterTitle.slice(journalEndIndex + 1).trim();
 
-  const journalParts = afterYear.split(".");
-  const title = journalParts[0].trim();
-  const journal = journalParts[1].trim();
-  console.log(afterYear);
+const volumeEndIndex = afterJournal.indexOf("(");
+const volume = afterJournal.slice(0, volumeEndIndex).trim();
+const afterVolume = afterJournal.slice(volumeEndIndex + 1).trim();
 
-  const volumeAndPages = journalParts[2].trim().split(",");
-  const volume = volumeAndPages[0].trim();
-  const pages = volumeAndPages[1].trim();
-  console.log(journalParts);
 
-  const doiParts = journalParts[3].trim().split(" ");
-  const doi = doiParts[1].trim();
+const issueEndIndex = afterVolume.indexOf(")");
+const issue = afterVolume.slice(0, issueEndIndex).trim();
+const afterIssue = afterVolume.slice(issueEndIndex + 1).trim();
 
-  
+const pages = afterIssue.slice(1).trim();
+const cleanPages = pages.slice(0,-1).trim();
+
+
+
+console.log(volume);
+console.log(pages);
+console.log(cleanPages);
+console.log(journal);
+console.log(afterJournal);
+console.log(title);
+console.log(afterTitle);
+console.log(citationBody);
+console.log(author);
+console.log(year);
+console.log(afterYear);
+const doi = "";
     return {
     author: author,
     year: year,
     title: title,
     journal: journal,
     volume: volume,
-    number: number,
-    pages: pages,
+    number: issue,
+    pages: cleanPages,
     doi: doi
   };
 }
 
 function copyToClipboard() {
-    const bibTexOutput = document.getElementById('bibtexOutput');
-    const textToCopy = bibTexOutput.textContent;
+  const bibTexOutput = document.getElementById("bibtexOutput");
+  const textToCopy = bibTexOutput.textContent;
 
-    navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('BibTeX entry copied to clipboard!');
-    }).catch(err => {
-        console.error('Failed to copy text: ', err);
+  console.log("button clicked");
+  console.log("copied text:", textToCopy);
+
+  if (!textToCopy.trim()) {
+    alert("nothing to copy bro");
+    return;
+  }
+
+  navigator.clipboard.writeText(textToCopy)
+    .then(() => {
+      alert("BibTeX entry copied to clipboard!");
+    })
+    .catch((err) => {
+      console.error("Failed to copy text:", err);
+      alert("Copy failed. Check the console.");
     });
 }
 document.addEventListener("DOMContentLoaded", () => {
@@ -77,6 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("submit", (event) => {
       event.preventDefault();
       convertToBibTex();
+    });
+
+  document
+    .getElementById("copyButton")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      copyToClipboard();
     });
 
   document.querySelectorAll("h1, h2").forEach((text) => {
