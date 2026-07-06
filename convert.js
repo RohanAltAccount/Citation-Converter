@@ -84,26 +84,57 @@ const doi = "";
   };
 }
 
-function copyToClipboard() {
-  const bibTexOutput = document.getElementById("bibtexOutput");
-  const textToCopy = bibTexOutput.textContent;
+function fallbackCopyText(text) {
+  const textArea = document.createElement("textarea");
 
-  console.log("button clicked");
+  textArea.value = text;
+  textArea.setAttribute("readonly", "");
+  textArea.style.position = "fixed";
+  textArea.style.top = "-9999px";
+  textArea.style.left = "-9999px";
+
+  document.body.appendChild(textArea);
+  textArea.select();
+  textArea.setSelectionRange(0, text.length);
+
+  const didCopy = document.execCommand("copy");
+  document.body.removeChild(textArea);
+
+  if (!didCopy) {
+    throw new Error("Clipboard copy command was unsuccessful.");
+  }
+}
+
+async function copyToClipboard() {
+  const bibTexOutput = document.getElementById("bibtexOutput");
+  const copyButton = document.getElementById("copyButton");
+  const textToCopy = bibTexOutput.textContent.trim();
+
+  console.log("button was clicked");
   console.log("copied text:", textToCopy);
 
-  if (!textToCopy.trim()) {
-    alert("nothing to copy bro");
+  if (!textToCopy) {
+    alert("can you put smth in the box before copying like dude i cant magically guess what u wanna copy");
     return;
   }
 
-  navigator.clipboard.writeText(textToCopy)
-    .then(() => {
-      alert("BibTeX entry copied to clipboard!");
-    })
-    .catch((err) => {
-      console.error("Failed to copy text:", err);
-      alert("Copy failed. Check the console.");
-    });
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(textToCopy);
+    } else {
+      fallbackCopyText(textToCopy);
+    }
+
+    const originalLabel = copyButton.textContent;
+    copyButton.textContent = "copied to clipboard";
+
+    window.setTimeout(() => {
+      copyButton.textContent = originalLabel;
+    }, 1500);
+  } catch (err) {
+    console.error("Oh no:", err);
+    alert("oh shoot mb bro try again");
+  }
 }
 document.addEventListener("DOMContentLoaded", () => {
   document

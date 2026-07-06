@@ -125,6 +125,27 @@ h2.glitch{
     filter: drop-shadow(0 0 10px #81ff32);
 
 }
+.copyButton {
+    background-color: transparent;
+    color: gray;
+    font-family: 'Geist Pixel', sans-serif;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 30px;
+
+    animation: button 0.5s ease-in-out;
+    transition: 0.3s transform ease-in-out, 0.3s color ease-in-out, 0.3s filter ease-in-out;
+    margin-top: 10px;
+}
+.copyButton:hover {
+    transform: scale(1.05) translate(-2px);
+    color: #81ff32;
+    filter: drop-shadow(0 0 10px #81ff32);
+}
 @keyframes button {
     0% {
         transform: translateY(-20px);
