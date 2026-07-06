@@ -8,6 +8,6 @@ For example, it won't separate authors by 'and' and will keep the commas. Also, 
 
 ## Input Format
 
-Entries can only be converted from APA 7th edition. It can have multiple authors, but separate them by comma.
+Entries can only be converted from APA 7th edition. It can have multiple authors, but separate them by comma. **DOI NOT CURRENTLY SUPPORTED**
 
 Author, A., (2020). Here Is The Title. Name of the Journal, 12(34), 567-890.
