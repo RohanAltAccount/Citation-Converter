@@ -27,8 +27,7 @@ background-color: #000000;
     gap: 16px;
 }
 input:focus,
-textarea:focus,
-button:focus {
+textarea:focus {
   outline: 3px solid #81ff32;
   filter: drop-shadow(0 0 50px #81ff32);
 }
@@ -54,12 +53,16 @@ button:focus {
     color: #81ff32;
     filter: drop-shadow(0 0 10px #81ff32);
 }
+#button:active {
+    transform: scale(0.95) translate(2px);
+    color: #81ff32;
+}
 h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     animation: h1 0.5s ease-in-out;
     color:gray;
-    font: 'Geist Pixel', sans-serif;
+    font-family: 'Geist Pixel', sans-serif;
     transition: 0.3s color ease-in-out, 0.5s filter ease-in-out;
 
 }
@@ -77,6 +80,12 @@ h2:hover {
     color: #81ff32;
     filter: drop-shadow(0 0 10px #81ff32);
 }
+h1.glitch{
+    animation: glitchEffect 1s ease;
+}
+h2.glitch{
+    animation: glitchEffect 1s ease;
+}
 #citationForm {
     display: flex;
     flex-direction: column;
@@ -87,6 +96,7 @@ h2:hover {
 .label {
     color: gray;
     transition: 0.3s color ease-in-out, 0.5s filter ease;
+    animation: label 0.5s ease-in-out;
 }
 .label:hover {
     color: #81ff32;
@@ -106,6 +116,8 @@ h2:hover {
     transition: transform 0.5s ease, filter 0.5s ease;
     box-sizing: border-box;
     filter: drop-shadow(0 0 10px #81ff32);
+    animation: apaCitation 0.5s ease-in-out;
+
 }
 #apaCitation:hover {
 
@@ -124,7 +136,7 @@ h2:hover {
     }
 }
 
-@keyframes h1 {
+@keyframes apaCitation {
     0% {
         transform: translateY(-20px);
         opacity: 0;
@@ -133,4 +145,25 @@ h2:hover {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+
+@keyframes label {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glitchEffect {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 2px); }
+    40% { transform: translate(4px, -2px); }
+    60% { transform: translate(-2px, -3px); }
+    80% { transform: translate(3px, 2px); }
+    100% { transform: translate(0); }
 }
